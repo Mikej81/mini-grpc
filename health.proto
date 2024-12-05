@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package health;
+
+option go_package = "./";
+
+service HealthService {
+  rpc CheckHealth(HealthRequest) returns (HealthResponse);
+  rpc CheckNonHealth(HealthRequest) returns (HealthResponse);
+}
+
+message HealthRequest {}
+
+message HealthResponse {
+  string status = 1;
+}
