@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package health;
 
-option go_package = "github.com/yourusername/mini-grpc/health";
+option go_package = "github.com/mikej81/mini-grpc/health";
 
 service HealthService {
   rpc CheckHealth(HealthRequest) returns (HealthResponse);
