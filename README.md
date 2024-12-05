@@ -25,7 +25,7 @@ go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 grpcurl: Install grpcurl for testing:
 
 ```bash
-git clone https://github.com/yourusername/mini-grpc.git
+git clone https://github.com/mikej81/mini-grpc.git
 cd mini-grpc
 ```
 
