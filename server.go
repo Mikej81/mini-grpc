@@ -5,8 +5,9 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/michael/mini-grpc"
+	pb "github.com/mikej81/mini-grpc/health"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type server struct {
@@ -29,6 +30,9 @@ func main() {
 
 	grpcServer := grpc.NewServer()
 	pb.RegisterHealthServiceServer(grpcServer, &server{})
+
+	// Enable gRPC Reflection
+	reflection.Register(grpcServer)
 
 	log.Println("gRPC server is running on port 50051...")
 	if err := grpcServer.Serve(listener); err != nil {
