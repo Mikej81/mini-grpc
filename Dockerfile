@@ -1,5 +1,8 @@
 # Use the official Golang image
-FROM golang:1.19
+FROM golang:1.23
+
+
+LABEL org.opencontainers.image.source https://github.com/mikej81/mini-grpc
 
 # Set up the working directory
 WORKDIR /app
