@@ -1,0 +1,43 @@
+{
+    "metadata": {
+        "name": "mini-grpc-server",
+        "namespace": "mine",
+        "labels": {},
+        "annotations": {},
+        "disable": false
+    },
+    "spec": {
+        "service": {
+            "num_replicas": 1,
+            "containers": [
+                {
+                    "name": "mini-grpc-container",
+                    "image": {
+                        "name": "ghcr.io/mikej81/minigrpc:latest",
+                        "public": {},
+                        "pull_policy": "IMAGE_PULL_POLICY_DEFAULT"
+                    },
+                    "init_container": false,
+                    "flavor": "CONTAINER_FLAVOR_TYPE_TINY",
+                    "command": [],
+                    "args": []
+                }
+            ],
+            "volumes": [],
+            "advertise_options": {
+                "advertise_in_cluster": {
+                    "port": {
+                        "info": {
+                            "port": 50051,
+                            "protocol": "PROTOCOL_TCP",
+                            "same_as_port": {}
+                        }
+                    }
+                }
+            },
+            "family": {
+                "v4": {}
+            }
+        }
+    }
+}

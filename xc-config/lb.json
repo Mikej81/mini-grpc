@@ -1,0 +1,137 @@
+{
+    "metadata": {
+        "name": "grpc-test",
+        "namespace": "minen",
+        "labels": {
+            "ves.io/app_type": "ves-io-mine-grpc-test"
+        },
+        "annotations": {},
+        "disable": false
+    },
+    "spec": {
+        "domains": [
+            "grpc.myedgedemo.com"
+        ],
+        "https_auto_cert": {
+            "http_redirect": true,
+            "add_hsts": true,
+            "port": 443,
+            "tls_config": {
+                "default_security": {}
+            },
+            "no_mtls": {},
+            "default_header": {},
+            "enable_path_normalize": {},
+            "non_default_loadbalancer": {},
+            "header_transformation_type": {
+                "legacy_header_transformation": {}
+            },
+            "connection_idle_timeout": 120000,
+            "http_protocol_options": {
+                "http_protocol_enable_v2_only": {}
+            }
+        },
+        "downstream_tls_certificate_expiration_timestamps": [
+            {}
+        ],
+        "advertise_on_public_default_vip": {},
+        "default_route_pools": [],
+        "routes": [
+            {
+                "simple_route": {
+                    "http_method": "ANY",
+                    "path": {
+                        "prefix": "/"
+                    },
+                    "headers": [],
+                    "incoming_port": {
+                        "no_port_match": {}
+                    },
+                    "origin_pools": [
+                        {
+                            "pool": {
+                                "namespace": "mine",
+                                "name": "grpc-origin",
+                                "kind": "origin_pool"
+                            },
+                            "weight": 1,
+                            "priority": 1,
+                            "endpoint_subsets": {}
+                        }
+                    ],
+                    "disable_host_rewrite": {},
+                    "advanced_options": {
+                        "common_hash_policy": {},
+                        "priority": "DEFAULT",
+                        "endpoint_subsets": {},
+                        "disable_prefix_rewrite": {},
+                        "request_headers_to_add": [],
+                        "request_headers_to_remove": [],
+                        "response_headers_to_add": [],
+                        "response_headers_to_remove": [],
+                        "disable_location_add": false,
+                        "inherited_waf": {},
+                        "disable_spdy": {},
+                        "disable_web_socket_config": {},
+                        "default_retry_policy": {},
+                        "timeout": 0,
+                        "common_buffering": {},
+                        "disable_mirroring": {},
+                        "do_not_retract_cluster": {},
+                        "inherited_bot_defense_javascript_injection": {}
+                    }
+                }
+            }
+        ],
+        "cors_policy": {
+            "allow_origin": [],
+            "allow_origin_regex": [],
+            "allow_methods": "GET, PUT, DELETE, POST, OPTIONS",
+            "allow_headers": "keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,custom-header-1,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent,x-grpc-web",
+            "expose_headers": "custom-header-1,grpc-status,grpc-message",
+            "maximum_age": 0,
+            "allow_credentials": false,
+            "disabled": false
+        },
+        "app_firewall": {
+            "namespace": "mine",
+            "name": "demo-waf",
+            "kind": "app_firewall"
+        },
+        "add_location": false,
+        "no_challenge": {},
+        "user_identification": {
+            "namespace": "mine",
+            "name": "user-combo",
+            "kind": "user_identification"
+        },
+        "disable_rate_limit": {},
+        "waf_exclusion_rules": [],
+        "data_guard_rules": [],
+        "blocked_clients": [],
+        "trusted_clients": [],
+        "ddos_mitigation_rules": [],
+        "no_service_policies": {},
+        "source_ip_stickiness": {},
+        "disable_trust_client_ip_headers": {},
+        "disable_malicious_user_detection": {},
+        "enable_api_discovery": {
+            "disable_learn_from_redirect_traffic": {},
+            "discovered_api_settings": {
+                "purge_duration_for_inactive_discovered_apis": 2
+            }
+        },
+        "disable_bot_defense": {},
+        "default_sensitive_data_policy": {},
+        "disable_api_definition": {},
+        "disable_ip_reputation": {},
+        "disable_client_side_defense": {},
+        "graphql_rules": [],
+        "protected_cookies": [],
+        "dns_info": [],
+        "internet_vip_info": [],
+        "system_default_timeouts": {},
+        "disable_threat_mesh": {},
+        "l7_ddos_action_default": {}
+    }
+}

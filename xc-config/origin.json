@@ -1,0 +1,46 @@
+{
+    "metadata": {
+        "name": "grpc-origin",
+        "namespace": "mine",
+        "labels": {},
+        "annotations": {},
+        "disable": false
+    },
+    "spec": {
+        "origin_servers": [
+            {
+                "k8s_service": {
+                    "service_name": "mini-grpc-server.mine",
+                    "site_locator": {
+                        "virtual_site": {
+                            "namespace": "shared",
+                            "name": "vsite",
+                            "kind": "virtual_site"
+                        }
+                    },
+                    "vk8s_networks": {}
+                },
+                "labels": {}
+            }
+        ],
+        "no_tls": {},
+        "port": 50051,
+        "same_as_endpoint_port": {},
+        "healthcheck": [],
+        "loadbalancer_algorithm": "LB_OVERRIDE",
+        "endpoint_selection": "LOCAL_PREFERRED",
+        "advanced_options": {
+            "connection_timeout": 120000,
+            "http_idle_timeout": 120000,
+            "disable_circuit_breaker": {},
+            "disable_outlier_detection": {},
+            "no_panic_threshold": {},
+            "disable_subsets": {},
+            "http2_options": {
+                "enabled": true
+            },
+            "disable_lb_source_ip_persistance": {},
+            "disable_proxy_protocol": {}
+        }
+    }
+}
