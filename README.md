@@ -6,8 +6,8 @@ Just a mini gRPC tester
 
 This project demonstrates a simple gRPC server with two endpoints: /health and /non-health. The server is written in Go and exposes the following functionality:
 
-CheckHealth: Responds with healthy.
-CheckNonHealth: Responds with sick.
+- CheckHealth: Responds with healthy.
+- CheckNonHealth: Responds with sick.
 
 ## Getting Started
 
@@ -43,11 +43,11 @@ go run server.go
 
 The server will run on localhost:50051.
 
-### Testing the Server
+## Testing the Server
 
 You can test the gRPC server using grpcurl commands.
 
-CheckHealth Endpoint
+### CheckHealth Endpoint
 
 Invoke the CheckHealth method:
 
@@ -63,7 +63,7 @@ Copy code
   "status": "healthy"
 }
 
-CheckNonHealth Endpoint
+### CheckNonHealth Endpoint
 
 Invoke the CheckNonHealth method:
 
