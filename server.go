@@ -4,9 +4,11 @@ import (
 	"context"
 	"log"
 	"net"
+	"time"
 
 	pb "github.com/mikej81/mini-grpc/health"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/grpc/status"
 )
@@ -34,15 +36,49 @@ func LoggingInterceptor(
 	return resp, err
 }
 
+// server implements the HealthServiceServer interface
 type server struct {
 	pb.UnimplementedHealthServiceServer
 }
 
+// CheckHealth returns the health status of the service
 func (s *server) CheckHealth(ctx context.Context, req *pb.HealthRequest) (*pb.HealthResponse, error) {
+	// Respect deadlines
+	if deadline, ok := ctx.Deadline(); ok {
+		timeLeft := time.Until(deadline)
+		log.Printf("Deadline received, time left: %v", timeLeft)
+	}
+
+	// Validate the request
+	if req == nil {
+		return nil, status.Errorf(codes.InvalidArgument, "request cannot be nil")
+	}
+
+	// Simulate a successful response
+	log.Println("Processing CheckHealth request...")
 	return &pb.HealthResponse{Status: "healthy"}, nil
 }
 
+// CheckNonHealth returns a "sick" status for demonstration purposes
 func (s *server) CheckNonHealth(ctx context.Context, req *pb.HealthRequest) (*pb.HealthResponse, error) {
+	// Respect deadlines
+	if deadline, ok := ctx.Deadline(); ok {
+		timeLeft := time.Until(deadline)
+		log.Printf("Deadline received, time left: %v", timeLeft)
+	}
+
+	// Validate the request
+	if req == nil {
+		return nil, status.Errorf(codes.InvalidArgument, "request cannot be nil")
+	}
+
+	// Simulate a potential error scenario for demonstration
+	if time.Now().Unix()%2 == 0 { // Simulated condition
+		return nil, status.Errorf(codes.Internal, "simulated server error")
+	}
+
+	// Simulate a successful response
+	log.Println("Processing CheckNonHealth request...")
 	return &pb.HealthResponse{Status: "sick"}, nil
 }
 
