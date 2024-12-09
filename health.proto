@@ -9,8 +9,12 @@ service HealthService {
   rpc CheckNonHealth(HealthRequest) returns (HealthResponse);
 }
 
-message HealthRequest {}
+message HealthRequest {
+  string field = 1;
+  string value = 2;
+}
 
 message HealthResponse {
   string status = 1;
+  string submit_string = 2;
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 	"time"
@@ -41,7 +42,7 @@ type server struct {
 	pb.UnimplementedHealthServiceServer
 }
 
-// CheckHealth returns the health status of the service
+// CheckHealth processes the request and returns the status and a submit-string
 func (s *server) CheckHealth(ctx context.Context, req *pb.HealthRequest) (*pb.HealthResponse, error) {
 	// Respect deadlines
 	if deadline, ok := ctx.Deadline(); ok {
@@ -50,16 +51,22 @@ func (s *server) CheckHealth(ctx context.Context, req *pb.HealthRequest) (*pb.He
 	}
 
 	// Validate the request
-	if req == nil {
-		return nil, status.Errorf(codes.InvalidArgument, "request cannot be nil")
+	if req == nil || req.Field == "" || req.Value == "" {
+		return nil, status.Errorf(codes.InvalidArgument, "field and value cannot be empty")
 	}
+
+	// Generate a submit-string based on the request
+	submitString := fmt.Sprintf("Field: %s, Value: %s", req.Field, req.Value)
 
 	// Simulate a successful response
 	log.Println("Processing CheckHealth request...")
-	return &pb.HealthResponse{Status: "healthy"}, nil
+	return &pb.HealthResponse{
+		Status:       "healthy",
+		SubmitString: submitString,
+	}, nil
 }
 
-// CheckNonHealth returns a "sick" status for demonstration purposes
+// CheckNonHealth processes the request and returns the status and a submit-string
 func (s *server) CheckNonHealth(ctx context.Context, req *pb.HealthRequest) (*pb.HealthResponse, error) {
 	// Respect deadlines
 	if deadline, ok := ctx.Deadline(); ok {
@@ -68,18 +75,19 @@ func (s *server) CheckNonHealth(ctx context.Context, req *pb.HealthRequest) (*pb
 	}
 
 	// Validate the request
-	if req == nil {
-		return nil, status.Errorf(codes.InvalidArgument, "request cannot be nil")
+	if req == nil || req.Field == "" || req.Value == "" {
+		return nil, status.Errorf(codes.InvalidArgument, "field and value cannot be empty")
 	}
 
-	// Simulate a potential error scenario for demonstration
-	if time.Now().Unix()%2 == 0 { // Simulated condition
-		return nil, status.Errorf(codes.Internal, "simulated server error")
-	}
+	// Generate a submit-string based on the request
+	submitString := fmt.Sprintf("Field: %s, Value: %s", req.Field, req.Value)
 
-	// Simulate a successful response
+	// Simulate a response
 	log.Println("Processing CheckNonHealth request...")
-	return &pb.HealthResponse{Status: "sick"}, nil
+	return &pb.HealthResponse{
+		Status:       "sick",
+		SubmitString: submitString,
+	}, nil
 }
 
 func main() {
